@@ -1,25 +1,17 @@
 package com.bmmt.demo.services;
-
 import com.bmmt.demo.entities.Account;
-import com.bmmt.demo.entities.Transaction;
-import com.bmmt.demo.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.bmmt.demo.repositories.AccountRepository;
-
-import java.time.LocalDate;
 
 
 @Service
 public class AccountService {
     private final AccountRepository accountsRepository;
-    private final TransactionRepository transactionRepository;
 
     @Autowired
-    public AccountService(AccountRepository accountsRepository, TransactionRepository transactionRepository) {
+    public AccountService(AccountRepository accountsRepository) {
         this.accountsRepository = accountsRepository;
-        this.transactionRepository = transactionRepository;
     }
 
     public Iterable<Account> index() {
@@ -35,7 +27,7 @@ public class AccountService {
     }
 
     public Account findByAccountNum(Long accountNumber) {
-        return accountsRepository.findAccountByAccountNumber(accountNumber);
+        return accountsRepository.findByAccountNumber(accountNumber);
     }
 
     public Account create(Account account) {
@@ -76,17 +68,23 @@ public class AccountService {
         return accountsRepository.save(original);
     }
 
-    public Account deposit(Long accountNumber, Double amount) {
-        Account ogAccount = accountsRepository.findAccountByAccountNumber(accountNumber);
-        ogAccount.setBalance(ogAccount.getBalance() + amount);
+    public Account deposit(Long accountNumber, Account account) {
+        Account ogAccount = accountsRepository.findByAccountNumber(accountNumber);
+        ogAccount.setAccountNumber(account.getAccountNumber());
+        ogAccount.setAccountType(account.getAccountType());
+        ogAccount.setUserId(account.getUserId());
+        ogAccount.setTransactions(account.getTransactions());
+        ogAccount.setBalance(account.getBalance());
         return accountsRepository.save(ogAccount);
     }
 
-    public Account withdraw(Long accountNumber, Double amount) {
-        Account ogAccount = accountsRepository.findAccountByAccountNumber(accountNumber);
-        Double currentBalance = ogAccount.getBalance();
-        Double newBalance = currentBalance - amount;
-        ogAccount.setBalance(newBalance);
+    public Account withdraw(Long accountNumber, Account account) {
+        Account ogAccount = accountsRepository.findByAccountNumber(accountNumber);
+        ogAccount.setAccountNumber(account.getAccountNumber());
+        ogAccount.setAccountType(account.getAccountType());
+        ogAccount.setUserId(account.getUserId());
+        ogAccount.setTransactions(account.getTransactions());
+        ogAccount.setBalance(account.getBalance());
         return accountsRepository.save(ogAccount);
     }
 
