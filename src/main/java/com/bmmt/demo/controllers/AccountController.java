@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.bmmt.demo.services.AccountService;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 @RestController
 public class AccountController {
     private final AccountService accountService;
@@ -18,13 +18,19 @@ public class AccountController {
     }
 
     @PostMapping("/account")
-    public Account create(Account account) {
-        return accountService.create(account);
+    public ResponseEntity<Account> create(Account account) {
+        return new ResponseEntity<>(accountService.create(account), HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/account/delete/")
+    public Boolean delete(Account account) {
+
+        return accountService.delete(account);
     }
 
     @DeleteMapping("/account/delete/{accountNumber}")
-    public Boolean delete(Account account) {
-        return accountService.delete(account);
+    public void deleteAccount(@PathVariable Long accountNumber) {
+        accountService.deleteByAccountNumber(accountNumber);
     }
 
     @GetMapping("/account/all")
@@ -58,8 +64,8 @@ public class AccountController {
         return accountService.update(id, account);
     }
 
-    @PutMapping("/account/deposit/{accountNumber}/")
-    public Account depositFunds(@PathVariable Long accountNumber, Double amount) {
+    @PutMapping("/account/deposit/{accountNumber}/{amount}")
+    public Account depositFunds(@PathVariable Long accountNumber, @PathVariable Double amount) {
         return accountService.deposit(accountNumber, amount);
     }
 

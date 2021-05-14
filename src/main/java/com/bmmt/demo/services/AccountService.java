@@ -47,6 +47,10 @@ public class AccountService {
         return true;
     }
 
+    public void deleteByAccountNumber(Long accountNumber) {
+        accountsRepository.deleteAccountByAccountNumber(accountNumber);
+    }
+
     public Account findOneUserAccount(Long userId, String accountName) {
         return accountsRepository.findUserCheckingAccount(userId, accountName);
     }
@@ -80,7 +84,9 @@ public class AccountService {
 
     public Account withdraw(Long accountNumber, Double amount) {
         Account ogAccount = accountsRepository.findAccountByAccountNumber(accountNumber);
-        ogAccount.setBalance(ogAccount.getBalance() - amount);
+        Double currentBalance = ogAccount.getBalance();
+        Double newBalance = currentBalance - amount;
+        ogAccount.setBalance(newBalance);
         return accountsRepository.save(ogAccount);
     }
 
