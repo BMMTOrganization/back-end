@@ -37,9 +37,9 @@ public class FaqController {
         return new ResponseEntity<>(faqService.update(id, faq), HttpStatus.OK);
     }
 
-//    @DeleteMapping("/faq/{id}")
-//    public ResponseEntity<Boolean> destroy(@PathVariable Faq faq){
-//        return new ResponseEntity<>(faqService.delete(faq)), HttpStatus.OK);
-//    }
+    @DeleteMapping("/faq/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+        return new ResponseEntity<>(faqService.delete(id), HttpStatus.OK);
+    }
 
 }

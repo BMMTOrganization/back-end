@@ -27,8 +27,8 @@ public class FaqService {
         return faqRepo.save(faq);
     }
 
-    public Boolean delete(Faq faq) {
-        faqRepo.delete(faq);
+    public Boolean delete(Long id) {
+        faqRepo.delete(show(id));
         return true;
     }
 
