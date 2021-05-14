@@ -6,10 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class ContactController {
@@ -38,5 +35,10 @@ public class ContactController {
     @PutMapping("/contact/{id}")
     public ResponseEntity<Contact> update(@PathVariable Long id, Contact contact) {
         return new ResponseEntity<>(contactService.update(id, contact), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/contact/{id}")
+    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+        return new ResponseEntity<>(contactService.delete(id), HttpStatus.OK);
     }
 }

@@ -28,8 +28,8 @@ public class ContactService {
         return contactRepo.save(contact);
     }
 
-    public Boolean delete(Contact contact) {
-        contactRepo.delete(contact);
+    public Boolean delete(Long id) {
+        contactRepo.delete(show(id));
         return true;
     }
 
