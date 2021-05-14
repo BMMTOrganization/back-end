@@ -64,14 +64,14 @@ public class AccountController {
         return accountService.update(id, account);
     }
 
-    @PutMapping("/account/deposit/{accountNumber}/{amount}")
-    public Account depositFunds(@PathVariable Long accountNumber, @PathVariable Double amount) {
-        return accountService.deposit(accountNumber, amount);
+    @PutMapping("/account/deposit/{accountNumber}")
+    public ResponseEntity<Account> depositFunds(@PathVariable Long accountNumber, @RequestBody Account account) {
+        return new ResponseEntity<>(accountService.deposit(accountNumber, account), HttpStatus.OK);
     }
 
-    @PutMapping("/account/withdraw/{accountNumber}/{amount}")
-    public Account withdrawFunds(@PathVariable Long accountNumber, @PathVariable Double amount) {
-        return accountService.withdraw(accountNumber, amount);
+    @PutMapping("/account/withdraw/{accountNumber}")
+    public ResponseEntity<Account> withdrawFunds(@PathVariable Long accountNumber, @RequestBody Account account) {
+        return new ResponseEntity<> (accountService.withdraw(accountNumber, account), HttpStatus.OK);
     }
 
 //    @PutMapping("/account/transfer/{accountOne}/{accountTwo}/{amount}")
