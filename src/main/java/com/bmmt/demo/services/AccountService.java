@@ -88,6 +88,10 @@ public class AccountService {
         return accountsRepository.save(ogAccount);
     }
 
+    public void deleteById(Long id) {
+        accountsRepository.deleteById(id);
+    }
+
 
 //    public Account transfer(Double amount, Long accountOne, Long accountTwo) {
 //    }
