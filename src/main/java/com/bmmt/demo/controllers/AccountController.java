@@ -32,6 +32,9 @@ public class AccountController {
     public void deleteAccount(@PathVariable Long accountNumber) {
         accountService.deleteByAccountNumber(accountNumber);
     }
+    
+    @DeleteMapping("/account/delete/{id}")
+    public void deleteById(@PathVariable Long id) { accountService.deleteById(id); }
 
     @GetMapping("/account/all")
     public Iterable<Account> getAll() {
